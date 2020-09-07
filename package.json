@@ -1,0 +1,28 @@
+{
+  "name": "nodejs-homeworks",
+  "version": "1.0.0",
+  "description": "homeworks",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaxaKozin/nodejs-homeworks.git"
+  },
+  "keywords": [
+    "nodejs",
+    "homeworks"
+  ],
+  "author": "Maksym Kozin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaxaKozin/nodejs-homeworks/issues"
+  },
+  "homepage": "https://github.com/MaxaKozin/nodejs-homeworks#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.4",
+    "yargs": "^15.4.1"
+  }
+}
