@@ -5,7 +5,7 @@ const shortid = require("shortid");
 const contactsPath = path.resolve(__dirname, "db", "contacts.json");
 
 async function listContacts() {
-  return await fs.readFile(contactsPath, "utf-8"));
+  return await fs.readFile(contactsPath, "utf-8");
 }
 
 async function getContactById(contactId) {
