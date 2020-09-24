@@ -12,7 +12,7 @@ const userRouter = Router();
 
 userRouter.post("/", checkAuthTokenMiddleware, createUserController);
 
-userRouter.patch("/userId", checkAuthTokenMiddleware, updateUserController);
+userRouter.patch("/:userId", checkAuthTokenMiddleware, updateUserController);
 
 userRouter.get("/current", checkAuthTokenMiddleware, currentUserController);
 
