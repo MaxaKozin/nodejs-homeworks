@@ -38,8 +38,8 @@ class Contacts {
     this.db = mongoose.model("Contacts", contactSchema);
   }
 
-  getContacts = async () => {
-    return await this.db.find();
+  getContacts = async (query) => {
+    return this.db.find(query);
   };
 
   addContact = async (contact) => {
