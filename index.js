@@ -3,6 +3,8 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
+const authRouter = require("./users/auth/auth.router");
+const userRouter = require("./users/user/user.router");
 const router = require("./contacts/router");
 
 const DB_URI =
@@ -31,6 +33,8 @@ const serverInit = async () => {
   app.use(morgan("tiny"));
   app.use(cors());
 
+  app.use("/auth", authRouter);
+  app.use("/users", userRouter);
   app.use(path, router);
 
   app.use((err, req, res, next) => {

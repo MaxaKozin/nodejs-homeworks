@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const { checkAuthTokenMiddleware } = require("../middlewares/auth.middleware");
 
 const {
   getController,
@@ -8,14 +9,14 @@ const {
   updateController,
 } = require("./contacts.controller");
 
-router.get("/", getController);
+router.get("/", checkAuthTokenMiddleware, getController);
 
-router.get("/:contactId", getByIdController);
+router.get("/:contactId", checkAuthTokenMiddleware, getByIdController);
 
-router.post("/", addController);
+router.post("/", checkAuthTokenMiddleware, addController);
 
-router.delete("/:contactId", removeController);
+router.delete("/:contactId", checkAuthTokenMiddleware, removeController);
 
-router.patch("/", updateController);
+router.patch("/", checkAuthTokenMiddleware, updateController);
 
 module.exports = router;

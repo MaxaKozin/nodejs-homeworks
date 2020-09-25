@@ -2,7 +2,8 @@ const ContactsDB = require("./contacts.model");
 
 const getController = async (req, res, next) => {
   try {
-    const contacts = await ContactsDB.getContacts();
+    const { query } = req;
+    const contacts = await ContactsDB.getContacts(query);
     res.status(200).json(contacts);
   } catch (e) {
     next(e);
