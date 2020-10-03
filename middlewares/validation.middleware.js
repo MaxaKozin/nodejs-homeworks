@@ -1,4 +1,4 @@
-const Validator = require("../users/validation/validation.model");
+const Validator = require("../api/users/validation/validation.model");
 
 const validateUserData = async (req, res, next) => {
   try {
