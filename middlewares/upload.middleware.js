@@ -3,7 +3,7 @@ const multer = require("multer");
 const avatarLoader = () => {
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, "public/images");
+      cb(null, process.env.PUBLIC_IMG);
     },
     filename: (req, file, cb) => {
       const type = file.mimetype.split("/")[1];

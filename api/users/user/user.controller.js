@@ -47,7 +47,9 @@ const uploadUserAvatarAndUpdate = async (req, res, next) => {
   try {
     const file = req.file;
     if (file.filename) {
-      const avatarPath = `http://localhost:3000/images/${file.filename}`;
+      const avatarPath = `${process.env.HOST + ":" + process.env.PORT}/images/${
+        file.filename
+      }`;
       await User.updateUser(req.user.id, { avatarURL: avatarPath });
       await deleteDefaultAvatar(req.user.id);
       res.status(200).send({ avatarURL: avatarPath });

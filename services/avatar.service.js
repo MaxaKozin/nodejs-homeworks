@@ -2,42 +2,47 @@ const AvatarGenerator = require("avatar-generator");
 const path = require("path");
 const fs = require("fs-extra");
 const User = require("../api/users/user/user.model");
+const {
+  generatorPartsPath,
+  generatedAvatarPath,
+  defaultAvatarPath,
+} = require("./config");
 
 const generate = async (id) => {
   const avatar = new AvatarGenerator({
     parts: ["background", "face", "clothes", "head", "hair", "eye", "mouth"],
-    partsLocation: path.join(__dirname, "../img"),
+    partsLocation: generatorPartsPath(),
     imageExtension: ".png",
   });
   const variant = "male";
   const image = await avatar.generate("email@example.com", variant);
-  image.png().toFile(`tmp/${id}.png`);
+  image.png().toFile(generatedAvatarPath(id));
 };
 
 const updateUserAvatarUrl = async (id) => {
-  const avatarUrl = `http://localhost:3000/images/${id}.png`;
+  const avatarUrl = `${
+    process.env.HOST + ":" + process.env.PORT
+  }/images/${id}.png`;
 
   return await User.updateUser(id, { avatarURL: avatarUrl });
 };
 
 const moveAvatar = async (id) => {
-  const oldFilePath = path.resolve("tmp", `${id}.png`);
-  const newFilePath = path.resolve("public", "images", `${id}.png`);
-  await fs.move(oldFilePath, newFilePath, (e) => {
-    if (e) return console.log(e);
-  });
+  const oldFilePath = generatedAvatarPath(id);
+  const newFilePath = defaultAvatarPath(id);
+  try {
+    await fs.move(oldFilePath, newFilePath);
+  } catch (err) {
+    console.log(error);
+  }
 };
 
 const deleteDefaultAvatar = async (id) => {
-  const defaultAvatarPath = path.resolve("public", "images", `${id}.png`);
-  await fs
-    .readFile(defaultAvatarPath)
-    .then(() => {
-      fs.unlink(defaultAvatarPath);
-    })
-    .catch((err) => {
-      return;
-    });
+  try {
+    fs.unlink(defaultAvatarPath(id));
+  } catch (err) {
+    return console.log(err);
+  }
 };
 
 module.exports = {
