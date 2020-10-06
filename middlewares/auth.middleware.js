@@ -1,5 +1,5 @@
 const { verifyToken } = require("../services/token.service");
-const User = require("../users/user/user.model");
+const User = require("../api/users/user/user.model");
 
 const checkAuthTokenMiddleware = async (req, res, next) => {
   try {

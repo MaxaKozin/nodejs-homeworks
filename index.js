@@ -3,9 +3,10 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
-const authRouter = require("./users/auth/auth.router");
-const userRouter = require("./users/user/user.router");
-const router = require("./contacts/router");
+const path = require("path");
+const authRouter = require("./api/users/auth/auth.router");
+const userRouter = require("./api/users/user/user.router");
+const router = require("./api/contacts/router");
 
 const DB_URI =
   process.env.DB_URI ||
@@ -18,6 +19,7 @@ const serverInit = async () => {
     .connect(DB_URI, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
+      useFindAndModify: false,
     })
     .then(() => console.log("Database connection successful"))
     .catch((err) => {
@@ -27,7 +29,8 @@ const serverInit = async () => {
 
   const app = express();
   const PORT = process.env.PORT || 3000;
-  const path = "/contacts";
+
+  app.use(express.static(path.resolve(__dirname, "public")));
 
   app.use(express.json());
   app.use(morgan("tiny"));
@@ -35,7 +38,7 @@ const serverInit = async () => {
 
   app.use("/auth", authRouter);
   app.use("/users", userRouter);
-  app.use(path, router);
+  app.use("/contacts", router);
 
   app.use((err, req, res, next) => {
     delete err.stack;
