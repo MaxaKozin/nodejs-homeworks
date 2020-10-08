@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema(
       enum: ["free", "pro", "premium"],
       default: "free",
     },
+    verificationToken: String,
     token: String,
   },
   { versionKey: false }
@@ -24,7 +25,7 @@ class User {
     return await this.db.create(userData);
   };
 
-  findUserByEmail = async (query) => {
+  findUserByQuery = async (query) => {
     return await this.db.findOne(query);
   };
 
